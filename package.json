@@ -1,7 +1,7 @@
 {
   "name": "npm-test-helpers",
   "version": "0.0.0",
-  "description": "Helpers for faking npm publishes, couch follower-feeds, and other useful things.",
+  "description": "Useful shared test helpers for writing apps that interact with npm.",
   "main": "./lib/index.js",
   "scripts": {
     "test": "lab -c --timeout=8000"
