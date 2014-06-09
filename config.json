@@ -1,0 +1,10 @@
+{
+  "testRegistryName": "npm-test-registry",
+  "host": "localhost",
+  "port": 5984,
+  "scheme": "http",
+  "cache": "/tmp",
+  "couchUser": "admin",
+  "couchPass": "admin",
+  "populateDesign": true
+}

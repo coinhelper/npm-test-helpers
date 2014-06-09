@@ -1,0 +1,57 @@
+{
+  "name": "thumbd",
+  "version": "2.8.1",
+  "directories": {
+    "lib": "./lib",
+    "bin": "./bin",
+    "data": "./data"
+  },
+  "main": "./lib/index.js",
+  "bin": {
+    "thumbd": "./bin/thumbd.js"
+  },
+  "author": {
+    "name": "Ben Coe",
+    "email": "bencoe@gmail.com"
+  },
+  "engines": [
+    "node"
+  ],
+  "scripts": {
+    "test": "mocha -u bdd -R nyan"
+  },
+  "description": "Node.js/AWS/ImageMagick-based image thumbnailing service.",
+  "keywords": [
+    "image",
+    "processing",
+    "thumbnail",
+    "imagemagick",
+    "sqs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bcoe/thumbd.git"
+  },
+  "dependencies": {
+    "knox": "~0.8.0",
+    "aws-sdk": "~1.7.1",
+    "underscore": "~1.4.2",
+    "tmp": "~0.0.16",
+    "optimist": "~0.3.4",
+    "async": "~0.2.7",
+    "sprintf-js": "0.0.7",
+    "request": "~2.34.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.7.4",
+    "sinon": "~1.6.0"
+  },
+  "readme": "Thumbd\n======\n\nBuild Status: [![Build Status](https://travis-ci.org/bcoe/thumbd.png)](https://travis-ci.org/bcoe/thumbd)\n\nThumbd is an image thumbnailing server built on top of Node.js, SQS, S3, and ImageMagick.\n\nYou can easily run Thumbd on *Heroku*. Simply set the appropriate environment variables with _config:set_ and deploy using the _Procfile_ provided.\n\nSetup\n-----\n\n```\napt-get install imagemagick\nnpm install thumbd\n```\n\nThumbd requires the following environment variables to be set:\n\n* **AWS_KEY** the key for your AWS account (the IAM user must have access to the appropriate SQS and S3 resources).\n* **AWS_SECRET** the AWS secret key.\n* **BUCKET** the bucket to download the original images from. The thumbnails will also be placed in this bucket.\n* **AWS_REGION** the AWS Region of the bucket. Defaults to: `us-east-1`.\n* **CONVERT_COMMAND** the ImageMagick convert command. Defaults to `convert`.\n* **REQUEST_TIMEOUT** how long to wait in milliseconds before aborting a remote request. Defaults to `15000`.\n* **S3_ACL** the acl to set on the uploaded images. Must be one of `private`, or `public-read`. Defaults to `private`.\n* **S3_STORAGE_CLASS** the storage class for the uploaded images. Must be either `STANDARD` or `REDUCED_REDUNDANCY`. Defaults to `STANDARD`.\n* **SQS_QUEUE** the queue name to listen for image thumbnailing.\n\nWhen running locally, I set these environment variables in a .env file and execute thumbd using Foreman.\n\nServer\n------\n\nThe thumbd server:\n\n* listens for thumbnailing jobs on the queue specified.\n* downloads the original image from our thumbnailng S3 bucket, or from an HTTP(s) resource.\n\t* HTTP resources are prefixed with `http://` or `https://`.\n\t* S3 resources are a path to the image in the S3 bucket indicated by the `BUCKET` environment variable.\n* Uses ImageMagick to perform a set of transformations on the image.\n* uploads the thumbnails created back to S3, with the following naming convention: `[original filename excluding extension]_[thumbnail suffix].[thumbnail format]`\n\nAssume that the following thumbnail job was received over SQS:\n\n```json\n{\n\t\"original\": \"example.png\",\n\t\"descriptions\": [\n\t\t{\n\t\t\t\"suffix\": \"tiny\",\n\t\t\t\"width\": 48,\n\t\t\t\"height\": 48\n\t\t},\n\t\t{\n\t\t\t\"suffix\": \"small\",\n\t\t\t\"width\": 100,\n\t\t\t\"height\": 100,\n\t\t\t\"background\": \"red\"\n\t\t},\n\t\t{\n\t\t\t\"suffix\": \"medium\",\n\t\t\t\"width\": 150,\n\t\t\t\"height\": 150,\n\t\t\t\"strategy\": \"bounded\"\n\t\t}\n\t]\n}\n```\n\nOnce thumbd processes the job, the files stored in S3 will look something like this:\n\n* **/example.png**\n* **/example\\_tiny.jpg**\n* **/example\\_small.jpg**\n* **/example\\_medium.jpg**\n\nClient\n------\n\nSubmit thumbnailing jobs from your application by creating an instance of a thumbd client (contribute by submitting clients in other languages).\n\n```javascript\nvar Client = require('./thumbd').Client,\n\tclient = new Client({\n\t\tawsKey: 'AWS-KEY',\n\t\tawsSecret: 'AWS-SECRET',\n\t\tawsRegion: 'AWS-REGION',\n\t\tsqsQueue: 'thumbnailing-queue',\n\t\ts3Bucket: 'thumbnails'\n\t});\n\nvar destination = '/example/awesome.jpg';\n\nclient.upload('/tmp/awesome.jpg', destination, function(err) {\n\tif (err) throw err;\n\tclient.thumbnail(originalImagePaths, [{suffix: 'small', width: 100, height: 100, background: 'red', strategy: 'matted'}], {\n\t\tnotify: 'https://callback.example.com', // optional web-hook when processing is done.\n\t\tprefix: 'foobar' // optional prefix for thumbnails created.\n\t});\n});\n```\n\n**Thumbnailing options:**\n\n* **originalImagePaths:** `string` or `array`, path to image or images that thumbnailing should be applied to.\n* **thumbnailDescriptions:** `array` describing the thumbnails that should be created.\n* **opts:** additional thumbnailing options.\n\t* **notify:** webhook to notify when thumbnailing is complete.\n\t* **prefix:** prefix for thumbnails created (defaults to original filename).\n\nThumbnail Descriptions\n----------------------\n\nThe descriptions received in the thumbnail job describe the way in which thumbnails should be generated.\n\n_description_ accepts the following keys:\n\n* **suffix:** a suffix describing the thumbnail.\n* **width:** the width of the thumbnail.\n* **height:** the height of the thumbnail.\n* **background:** background color for matte.\n* **format:** what should the output format of the image be, e.g., `jpg`, `gif`, defaults to `jpg`.\n* **strategy:** indicate an approach for creating the thumbnail.\n\t* **bounded (default):** maintain aspect ratio, don't place image on matte.\n\t* **matted:** maintain aspect ratio, places image on _width x height_ matte.\n\t* **fill:** both resizes and zooms into an image, filling the specified dimensions.\n\t* **strict:** resizes the image, filling the specified dimensions changing the aspect ratio\n\t* **manual:** allows for a custom convert command to be passed in:\n\t  * `%(command)s -border 0 %(localPaths[0])s %(convertedPath)s`\n* **quality:** the quality of the thumbnail, in percent. e.g. `90`.\n\nCLI\n---\n\nStarting the server:\n\n```bash\nthumbd server --aws_key=<key> --aws_secret=<secret> --sqs_queue=<sqs queue name> --bucket=<s3 thumbnail bucket> [--aws_region=<region>] [--tmp_dir=</tmp>] [--s3_acl=<private or public-read>] [--s3_storage_class=<STANDARD or REDUCED_REDUNDANCY>]\n```\n\nManually submitting an SQS thumbnailing job (useful for testing purposes):\n\n```bash\nthumbd thumbnail --remote_image=<path to image s3 or http> --descriptions=<path to thumbnail description JSON file> --aws_key=<key> --aws_secret=<secret> --sqs_queue=<sqs queue name> [--aws_region=<region>]\n```\n\n* **remote_image** indicates the S3 object to perform the thumbnailing operations on.\n* **thumbnail_descriptions** the path to a JSON file describing the dimensions of the thumbnails that should be created (see _example.json_ in the _data_ directory).\n\nAdvanced Tips and Tricks\n----------------\n\n* **Creating a Mosaic:** Rather than performing an operation on a single S3 resource, you can perform an operation on a set\nof S3 resources. A great example of this would be converting a set of images into a mosaic:\n\n```json\n{\n\t\"resources\": [\n\t\t\"images/image1.png\",\n\t\t\"images/image2.png\"\n\t],\n\t\"descriptions\": [{\n\t\t\"strategy\": \"%(command)s -border 0 -tile 2x1 -geometry 160x106 '%(localPaths[0])s' '%(localPaths[1])s' %(convertedPath)s\",\n\t\t\"command\": \"montage\",\n\t\t\"suffix\": \"stitch\"\n\t}]\n}\n```\n\nThe custom strategy can be used for a variety of purposes, _experiment with it :tm:_\n\nProduction Notes\n----------------\n\nAt Attachments.me, thumbd thumbnailed tens of thousands of images a day. There are a few things you should know about our production deployment:\n\n![Thumbd in Production](https://dl.dropboxusercontent.com/s/r2sce6tekfsvolt/thumbnailer.png?token_hash=AAHI0ARNhPdra24jqmDFpoC7nNiNTL8ELwOtaQB_YqVwpg \"Thumbd in Production\")\n\n* thumbd was not designed to be bullet-proof:\n\t* it is run with an Upstart script, which keeps the thumbnailing process on its feet.\n* Node.js is a single process, this does not take advantage of multi-processor environments.\n\t* we run an instance of thumbd per-CPU on our servers.\n* be midful of the version of ImageMagick you are running:\n\t* make sure that you build it with the appropriate extensions for images you would like to support.\n\t* we've had issues with some versions of ImageMagick, we run 6.6.2-6 in production.\n* Your SQS settings are important:\n\t* setup a visibility-timeout/message-retention value that allows for a reasonable number of thumbnailing attempts.\n\t* we use long-polling to reduce the latency time before a message is read.\n* in production, thumbd runs on Node 0.8.x. It has not been thoroughly tested with Streams 2.\n\nProjects Using Thumbd\n--------------------\n\n**If you build something cool using thumbd let me know, I will list it here.**\n\n* **[Popbasic](https://popbasic.com)**: designs limited edition, high quality clothing.\n* **[ineffable](https://github.com/taeram/ineffable/):** A minimalist photo album powered by Flask and React.\n* **[s3-gif](https://github.com/taeram/s3-gif):** Host your GIF collection on Heroku + Amazon S3.\n* **attachments.me**: created a searchable, visual, index of all of your email attachments (sadly defunct).\n\nCopyright\n---------\n\nCopyright (c) 2014 Contributors, See LICENSE.txt for further details.\n",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/bcoe/thumbd/issues"
+  },
+  "homepage": "https://github.com/bcoe/thumbd",
+  "_id": "thumbd@2.8.1",
+  "_from": "thumbd@"
+}

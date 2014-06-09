@@ -1,0 +1,31 @@
+{
+  "name": "npm-test-helpers",
+  "version": "0.0.0",
+  "description": "Helpers for faking npm publishes, couch follower-feeds, and other useful things.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "lab -c --timeout=8000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/npm/npm-test-helpers.git"
+  },
+  "author": "Benjamin Coe <ben@npmjs.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/npm/npm-test-helpers/issues"
+  },
+  "homepage": "https://github.com/npm/npm-test-helpers",
+  "dependencies": {
+    "bluebird": "^2.0.2",
+    "lodash": "^2.4.1",
+    "restify": "^2.8.1",
+    "npm-registry-couchapp": "git://github.com/npm/npm-registry-couchapp.git#no-prompt"
+  },
+  "devDependencies": {
+    "follow": "^0.11.2",
+    "lab": "^3.2.1",
+    "nock": "^0.34.0",
+    "npm-normalize": "^0.2.3"
+  }
+}

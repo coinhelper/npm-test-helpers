@@ -1,0 +1,71 @@
+{
+  "name": "thumbd",
+  "version": "2.7.0",
+  "directories": {
+    "lib": "./lib",
+    "bin": "./bin",
+    "data": "./data"
+  },
+  "main": "./lib/index.js",
+  "bin": {
+    "thumbd": "./bin/thumbd.js"
+  },
+  "author": {
+    "name": "Ben Coe",
+    "email": "bencoe@gmail.com"
+  },
+  "engines": [
+    "node"
+  ],
+  "scripts": {
+    "test": "mocha -u bdd -R nyan"
+  },
+  "description": "Node.js/AWS/ImageMagick-based image thumbnailing service.",
+  "keywords": [
+    "image",
+    "processing",
+    "thumbnail",
+    "imagemagick",
+    "sqs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bcoe/thumbd.git"
+  },
+  "dependencies": {
+    "knox": "~0.8.0",
+    "aws-sdk": "~1.7.1",
+    "underscore": "~1.4.2",
+    "tmp": "~0.0.16",
+    "optimist": "~0.3.4",
+    "async": "~0.2.7",
+    "sprintf-js": "0.0.7"
+  },
+  "devDependencies": {
+    "mocha": "~1.7.4",
+    "sinon": "~1.6.0"
+  },
+  "bugs": {
+    "url": "https://github.com/bcoe/thumbd/issues"
+  },
+  "homepage": "https://github.com/bcoe/thumbd",
+  "_id": "thumbd@2.7.0",
+  "dist": {
+    "shasum": "d168bdc6ba35c634541baa1f97883bb51f00fef3",
+    "tarball": "http://registry.npmjs.org/thumbd/-/thumbd-2.7.0.tgz"
+  },
+  "_from": "thumbd@2.7.0",
+  "_npmVersion": "1.4.3",
+  "_npmUser": {
+    "name": "bcoe",
+    "email": "bencoe@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "bcoe",
+      "email": "bencoe@gmail.com"
+    }
+  ],
+  "_shasum": "d168bdc6ba35c634541baa1f97883bb51f00fef3",
+  "_resolved": "https://registry.npmjs.org/thumbd/-/thumbd-2.7.0.tgz"
+}

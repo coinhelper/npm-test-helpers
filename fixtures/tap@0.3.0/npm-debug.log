@@ -1,0 +1,117 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'publish',
+1 verbose cli   '--registry=http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite' ]
+2 info using npm@1.4.14
+3 info using node@v0.10.26
+4 verbose publish [ '.' ]
+5 verbose cache add [ '.', null ]
+6 verbose cache add name=undefined spec="." args=[".",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: '.',
+7 verbose parsed url   path: '.',
+7 verbose parsed url   href: '.' }
+8 silly lockFile 3a52ce78- .
+9 verbose lock . /Users/benjamincoe/.npm/3a52ce78-.lock
+10 verbose tar pack [ '/Users/benjamincoe/.npm/tap/0.3.0/package.tgz', '.' ]
+11 verbose tarball /Users/benjamincoe/.npm/tap/0.3.0/package.tgz
+12 verbose folder .
+13 info prepublish tap@0.3.0
+14 silly lockFile 1f1177db-tar tar://.
+15 verbose lock tar://. /Users/benjamincoe/.npm/1f1177db-tar.lock
+16 silly lockFile bc12c35b-mincoe-npm-tap-0-3-0-package-tgz tar:///Users/benjamincoe/.npm/tap/0.3.0/package.tgz
+17 verbose lock tar:///Users/benjamincoe/.npm/tap/0.3.0/package.tgz /Users/benjamincoe/.npm/bc12c35b-mincoe-npm-tap-0-3-0-package-tgz.lock
+18 silly lockFile 1f1177db-tar tar://.
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile bc12c35b-mincoe-npm-tap-0-3-0-package-tgz tar:///Users/benjamincoe/.npm/tap/0.3.0/package.tgz
+21 silly lockFile bc12c35b-mincoe-npm-tap-0-3-0-package-tgz tar:///Users/benjamincoe/.npm/tap/0.3.0/package.tgz
+22 silly lockFile c4e6b282-enjamincoe-npm-tap-0-3-0-package /Users/benjamincoe/.npm/tap/0.3.0/package
+23 verbose lock /Users/benjamincoe/.npm/tap/0.3.0/package /Users/benjamincoe/.npm/c4e6b282-enjamincoe-npm-tap-0-3-0-package.lock
+24 silly lockFile c4e6b282-enjamincoe-npm-tap-0-3-0-package /Users/benjamincoe/.npm/tap/0.3.0/package
+25 silly lockFile c4e6b282-enjamincoe-npm-tap-0-3-0-package /Users/benjamincoe/.npm/tap/0.3.0/package
+26 silly lockFile 3a52ce78- .
+27 silly lockFile 3a52ce78- .
+28 silly publish { name: 'tap',
+28 silly publish   version: '0.3.0',
+28 silly publish   author:
+28 silly publish    { name: 'Isaac Z. Schlueter',
+28 silly publish      email: 'i@izs.me',
+28 silly publish      url: 'http://blog.izs.me' },
+28 silly publish   description: 'A Test-Anything-Protocol library',
+28 silly publish   bin: { tap: 'bin/tap.js' },
+28 silly publish   main: 'lib/main.js',
+28 silly publish   dependencies:
+28 silly publish    { inherits: '*',
+28 silly publish      yamlish: '*',
+28 silly publish      slide: '*',
+28 silly publish      runforcover: '~0.0.2',
+28 silly publish      nopt: '~2',
+28 silly publish      mkdirp: '~0.3',
+28 silly publish      difflet: '~0.2.0',
+28 silly publish      'deep-equal': '~0.0.0',
+28 silly publish      'buffer-equal': '~0.0.0' },
+28 silly publish   keywords: [ 'assert', 'test', 'tap' ],
+28 silly publish   contributors:
+28 silly publish    [ { name: 'Isaac Z. Schlueter',
+28 silly publish        email: 'i@izs.me',
+28 silly publish        url: 'http://blog.izs.me' },
+28 silly publish      { name: 'baudehlo', email: 'helpme+github@gmail.com' } ],
+28 silly publish   license:
+28 silly publish    { type: 'MIT',
+28 silly publish      url: 'https://github.com/isaacs/node-tap/raw/master/LICENSE' },
+28 silly publish   repository: { type: 'git', url: 'git://github.com/isaacs/node-tap.git' },
+28 silly publish   scripts: { test: 'bin/tap.js test/*.js' },
+28 silly publish   readme: 'This is a mix-and-match set of utilities that you can use to write test\nharnesses and frameworks that communicate with one another using the\nTest Anything Protocol.\n\nIf you don\'t yet know what TAP is, [you better ask\nsomebody](http://testanything.org/).\n\nDefault Usage:\n\n1. Make a directory.  Maybe call it \'test\'.  That\'d be nice and obvious.\n2. Put a bunch of test scripts in there.  If they\'re node programs, then\n   they should be ".js".  Anything else is assumed to be some kind of shell\n   script, which should have a shebang line.\n3. `npm install tap`\n4. `tap ./tests`\n\nThe output will be TAP-compliant.\n\nFor extra special bonus points, you can do something like this:\n\n    var test = require("tap").test\n    test("make sure the thingie is a thing", function (t) {\n      t.equal(thingie, "thing", "thingie should be thing")\n      t.type(thingie, "string", "type of thingie is string")\n      t.ok(true, "this is always true")\n      t.notOk(false, "this is never true")\n      t.test("a child test", function (t) {\n        t.equal(this, superEasy, "right!?")\n        t.similar(7, 2, "ever notice 7 is kinda like 2?", {todo: true})\n        t.test("so skippable", {skip: true}, function (t) {\n          t.plan(1) // only one test in this block\n          t.ok(true, "but when the flag changes, it\'ll pass")\n          // no need to end, since we had a plan.\n        })\n        t.end()\n      })\n      t.ok(99, "can also skip individual assertions", {skip: true})\n      // end lets it know it\'s over.\n      t.end()\n    })\n    test("another one", function (t) {\n      t.plan(1)\n      t.ok(true, "It\'s ok to plan, and also end.  Watch.")\n      t.end() // but it must match the plan!\n    })\n\nNode-tap is actually a collection of several modules, any of which may be\nmixed and matched however you please.\n\nIf you don\'t like this test framework, and think you can do much much\nbetter, *I strongly encourage you to do so!*  If you use this library,\nhowever, at least to output TAP-compliant results when `process.env.TAP`\nis set, then the data coming out of your framework will be much more\nconsumable by machines.\n\nYou can also use this to build programs that *consume* the TAP data, so\nthis is very useful for CI systems and such.\n\n* tap-assert: A collection of assert functions that return TAP result\n  objects.\n* tap-consumer: A stream interface for consuming TAP data.\n* tap-producer: A class that produces a TAP stream by taking in result\n  objects.\n* tap-results: A class for keeping track of TAP result objects as they\n  pass by, counting up skips, passes, fails, and so on.\n* tap-runner: A program that runs through a directory running all the\n  tests in it.  (Tests which may or may not be TAP-outputting tests.  But\n  it\'s better if they are.)\n* tap-test: A class for actually running tests.\n* tap-harness: A class that runs tests.  (Tests are also Harnesses,\n  which is how sub-tests run.)\n* tap-global-harness: A default harness that provides the top-level\n  support for running TAP tests.\n\n## Experimental Code Coverage with runforcover & bunker:\n\n```\nTAP_COV=1 tap ./tests [--cover=./lib,foo.js] [--cover-dir=./coverage]\n```\n\nThis feature is experimental, and will most likely change somewhat\nbefore being finalized.  Feedback welcome.\n',
+28 silly publish   readmeFilename: 'README.md',
+28 silly publish   bugs: { url: 'https://github.com/isaacs/node-tap/issues' },
+28 silly publish   homepage: 'https://github.com/isaacs/node-tap',
+28 silly publish   bundleDependencies: [ 'inherits', 'tap-consumer', 'yamlish' ],
+28 silly publish   _id: 'tap@0.3.0',
+28 silly publish   dist: { shasum: 'f8c3fb374da1540e4be3c2bf42c0938a204d6b30' },
+28 silly publish   _from: '.',
+28 silly publish   _resolved: 'https://registry.npmjs.org/tap/-/tap-0.3.0.tgz',
+28 silly publish   _shasum: '4b4400de31e2f1aaa969b0d3bf5f0322d07a6f88' }
+29 verbose url raw tap
+30 verbose url resolving [ 'http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite/',
+30 verbose url resolving   './tap' ]
+31 verbose url resolved http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite/tap
+32 info trying registry request attempt 1 at 15:32:45
+33 http PUT http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite/tap
+34 http 403 http://***@localhost:5984/npm-test-registry/_design/app/_rewrite/tap
+35 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03-1)',
+35 verbose headers   date: 'Mon, 09 Jun 2014 22:32:45 GMT',
+35 verbose headers   'content-type': 'application/json',
+35 verbose headers   'content-length': '7137',
+35 verbose headers   'cache-control': 'must-revalidate' }
+36 error publish Failed PUT 403
+37 error Error: forbidden cannot modify pre-existing version: 0.3.0
+37 error old={"name":"tap","version":"0.3.0","author":{"name":"Isaac Z. Schlueter","email":"i@izs.me","url":"http://blog.izs.me"},"description":"A Test-Anything-Protocol library","bin":{"tap":"bin/tap.js"},"main":"lib/main.js","dependencies":{"inherits":"*","yamlish":"*","slide":"*","runforcover":"~0.0.2","nopt":"~2","mkdirp":"~0.3","difflet":"~0.2.0","deep-equal":"~0.0.0","buffer-equal":"~0.0.0"},"keywords":["assert","test","tap"],"contributors":[{"name":"Isaac Z. Schlueter","email":"i@izs.me","url":"http://blog.izs.me"},{"name":"baudehlo","email":"helpme+github@gmail.com"}],"license":{"type":"MIT","url":"https://github.com/isaacs/node-tap/raw/master/LICENSE"},"repository":{"type":"git","url":"git://github.com/isaacs/node-tap.git"},"scripts":{"test":"bin/tap.js test/*.js"},"bugs":{"url":"https://github.com/isaacs/node-tap/issues"},"homepage":"https://github.com/isaacs/node-tap","bundleDependencies":["inherits","tap-consumer","yamlish"],"_id":"tap@0.3.0","dist":{"shasum":"4b4400de31e2f1aaa969b0d3bf5f0322d07a6f88","tarball":"http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite/tap/-/tap-0.3.0.tgz"},"_from":".","_resolved":"https://registry.npmjs.org/tap/-/tap-0.3.0.tgz","_shasum":"4b4400de31e2f1aaa969b0d3bf5f0322d07a6f88","_npmVersion":"1.4.14","_npmUser":{"name":"bcoe","email":"bencoe@gmail.com"},"maintainers":[{"name":"bcoe","email":"bencoe@gmail.com"}]}
+37 error new={"name":"tap","version":"0.3.0","author":{"name":"Isaac Z. Schlueter","email":"i@izs.me","url":"http://blog.izs.me"},"description":"A Test-Anything-Protocol library","bin":{"tap":"bin/tap.js"},"main":"lib/main.js","dependencies":{"inherits":"*","yamlish":"*","slide":"*","runforcover":"~0.0.2","nopt":"~2","mkdirp":"~0.3","difflet":"~0.2.0","deep-equal":"~0.0.0","buffer-equal":"~0.0.0"},"keywords":["assert","test","tap"],"contributors":[{"name":"Isaac Z. Schlueter","email":"i@izs.me","url":"http://blog.izs.me"},{"name":"baudehlo","email":"helpme+github@gmail.com"}],"license":{"type":"MIT","url":"https://github.com/isaacs/node-tap/raw/master/LICENSE"},"repository":{"type":"git","url":"git://github.com/isaacs/node-tap.git"},"scripts":{"test":"bin/tap.js test/*.js"},"readme":"This is a mix-and-match set of utilities that you can use to write test\u000aharnesses and frameworks that communicate with one another using the\u000aTest Anything Protocol.\u000a\u000aIf you don't yet know what TAP is, [you better ask\u000asomebody](http://testanything.org/).\u000a\u000aDefault Usage:\u000a\u000a1. Make a directory.  Maybe call it 'test'.  That'd be nice and obvious.\u000a2. Put a bunch of test scripts in there.  If they're node programs, then\u000a   they should be \".js\".  Anything else is assumed to be some kind of shell\u000a   script, which should have a shebang line.\u000a3. `npm install tap`\u000a4. `tap ./tests`\u000a\u000aThe output will be TAP-compliant.\u000a\u000aFor extra special bonus points, you can do something like this:\u000a\u000a    var test = require(\"tap\").test\u000a    test(\"make sure the thingie is a thing\", function (t) {\u000a      t.equal(thingie, \"thing\", \"thingie should be thing\")\u000a      t.type(thingie, \"string\", \"type of thingie is string\")\u000a      t.ok(true, \"this is always true\")\u000a      t.notOk(false, \"this is never true\")\u000a      t.test(\"a child test\", function (t) {\u000a        t.equal(this, superEasy, \"right!?\")\u000a        t.similar(7, 2, \"ever notice 7 is kinda like 2?\", {todo: true})\u000a        t.test(\"so skippable\", {skip: true}, function (t) {\u000a          t.plan(1) // only one test in this block\u000a          t.ok(true, \"but when the flag changes, it'll pass\")\u000a          // no need to end, since we had a plan.\u000a        })\u000a        t.end()\u000a      })\u000a      t.ok(99, \"can also skip individual assertions\", {skip: true})\u000a      // end lets it know it's over.\u000a      t.end()\u000a    })\u000a    test(\"another one\", function (t) {\u000a      t.plan(1)\u000a      t.ok(true, \"It's ok to plan, and also end.  Watch.\")\u000a      t.end() // but it must match the plan!\u000a    })\u000a\u000aNode-tap is actually a collection of several modules, any of which may be\u000amixed and matched however you please.\u000a\u000aIf you don't like this test framework, and think you can do much much\u000abetter, *I strongly encourage you to do so!*  If you use this library,\u000ahowever, at least to output TAP-compliant results when `process.env.TAP`\u000ais set, then the data coming out of your framework will be much more\u000aconsumable by machines.\u000a\u000aYou can also use this to build programs that *consume* the TAP data, so\u000athis is very useful for CI systems and such.\u000a\u000a* tap-assert: A collection of assert functions that return TAP result\u000a  objects.\u000a* tap-consumer: A stream interface for consuming TAP data.\u000a* tap-producer: A class that produces a TAP stream by taking in result\u000a  objects.\u000a* tap-results: A class for keeping track of TAP result objects as they\u000a  pass by, counting up skips, passes, fails, and so on.\u000a* tap-runner: A program that runs through a directory running all the\u000a  tests in it.  (Tests which may or may not be TAP-outputting tests.  But\u000a  it's better if they are.)\u000a* tap-test: A class for actually running tests.\u000a* tap-harness: A class that runs tests.  (Tests are also Harnesses,\u000a  which is how sub-tests run.)\u000a* tap-global-harness: A default harness that provides the top-level\u000a  support for running TAP tests.\u000a\u000a## Experimental Code Coverage with runforcover & bunker:\u000a\u000a```\u000aTAP_COV=1 tap ./tests [--cover=./lib,foo.js] [--cover-dir=./coverage]\u000a```\u000a\u000aThis feature is experimental, and will most likely change somewhat\u000abefore being finalized.  Feedback welcome.\u000a","readmeFilename":"README.md","bugs":{"url":"https://github.com/isaacs/node-tap/issues"},"homepage":"https://github.com/isaacs/node-tap","bundleDependencies":["inherits","tap-consumer","yamlish"],"_id":"tap@0.3.0","dist":{"shasum":"4b4400de31e2f1aaa969b0d3bf5f0322d07a6f88","tarball":"http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite/tap/-/tap-0.3.0.tgz"},"_from":".","_resolved":"https://registry.npmjs.org/tap/-/tap-0.3.0.tgz","_shasum":"4b4400de31e2f1aaa969b0d3bf5f0322d07a6f88","_npmVersion":"1.4.14","_npmUser":{"name":"bcoe","email":"bencoe@gmail.com"},"maintainers":[{"name":"bcoe","email":"bencoe@gmail.com"}]}: npm-test-registry/_design/app/_rewrite/tap
+37 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:274:14)
+37 error     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:212:65)
+37 error     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:123:22)
+37 error     at Request.EventEmitter.emit (events.js:98:17)
+37 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:893:14)
+37 error     at Request.EventEmitter.emit (events.js:117:20)
+37 error     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:844:12)
+37 error     at IncomingMessage.EventEmitter.emit (events.js:117:20)
+37 error     at _stream_readable.js:920:16
+37 error     at process._tickCallback (node.js:415:13)
+38 error If you need help, you may report this *entire* log,
+38 error including the npm and node versions, at:
+38 error     <http://github.com/npm/npm/issues>
+39 error System Darwin 13.1.0
+40 error command "node" "/usr/local/bin/npm" "publish" "--registry=http://admin:admin@localhost:5984/npm-test-registry/_design/app/_rewrite"
+41 error cwd /Users/benjamincoe/npm/npm-test-helpers/fixtures/tap@0.3.0
+42 error node -v v0.10.26
+43 error npm -v 1.4.14
+44 verbose exit [ 1, true ]
