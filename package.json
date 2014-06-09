@@ -1,6 +1,6 @@
 {
   "name": "npm-test-helpers",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Useful shared test helpers for writing apps that interact with npm.",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,8 +19,8 @@
   "dependencies": {
     "bluebird": "^2.0.2",
     "lodash": "^2.4.1",
-    "restify": "^2.8.1",
-    "npm-registry-couchapp": "git://github.com/npm/npm-registry-couchapp.git#no-prompt"
+    "npm-registry-couchapp": "^2.2.0",
+    "restify": "^2.8.1"
   },
   "devDependencies": {
     "follow": "^0.11.2",
