@@ -2,7 +2,7 @@ var Lab = require('lab'),
   Couch = require('../lib').Couch,
   Registry = require('../lib').Registry,
   restify = require('restify'),
-  config = require('../config.json'),
+  config = require('../test-config'),
   client = restify.createJsonClient({
     url: config.scheme + '://' + config.couchUser + ':' + config.couchPass + '@' + config.host + ':' + config.port
   });

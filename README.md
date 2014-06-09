@@ -10,7 +10,7 @@ It can be useful to test against a fully-functional Registry-Couch-App.
 **setting up your local environment**
 
 1. Edit your `local.ini` to have the settings outlined in https://github.com/npm/npm-registry-couchapp.
-2. Create a `config.json` that has appropriate settings for your CouchDB configuration:
+2. Create a `test-config.json` that has appropriate settings for your CouchDB configuration:
 
 ```json
 {
