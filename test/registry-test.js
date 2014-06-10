@@ -65,4 +65,15 @@ Lab.experiment('registry', function() {
     });
   });
 
+  Lab.experiment('delete', function() {
+    Lab.it('should delete the package from the regsitry', function(done) {
+      var registry = new Registry();
+
+      registry.delete('request').then(function(obj) {
+        Lab.expect(obj.ok).to.eql(true);
+        done();
+      }).done();
+    });
+  });
+
 });

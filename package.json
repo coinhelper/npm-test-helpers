@@ -1,6 +1,6 @@
 {
   "name": "npm-test-helpers",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Useful shared test helpers for writing apps that interact with npm.",
   "main": "./lib/index.js",
   "scripts": {
