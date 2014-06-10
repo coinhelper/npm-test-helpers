@@ -58,7 +58,7 @@ Lab.experiment('registry', function() {
     Lab.it('should allow a package to be unpublished', function(done) {
       var registry = new Registry();
 
-      registry.unpublish('request@1.9.0').then(function(stdout) {
+      registry.unpublish('request').then(function(stdout) {
         Lab.expect(stdout).to.eql('- request');
         done();
       }).done();
