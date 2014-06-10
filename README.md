@@ -85,6 +85,22 @@ couch.setup().then(function() {
 });
 ```
 
+**delete a package**
+
+```javascript
+var Couch = require('npm-test-helpers').Couch,
+ Registry = require('npm-test-helpers').Registry;
+
+couch.setup().then(function() {
+  var registry = new Registry();
+  registry.publish('request@2.36.0').then(function(stdout) {
+    return registry.delete('request');
+  }).then(function(stdout) {
+    // the package was unpublished.
+  });
+});
+```
+
 **testing a follower feed**
 
 We use followers all over the place, for different pieces of npm's architecture,
